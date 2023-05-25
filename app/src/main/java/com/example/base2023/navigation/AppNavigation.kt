@@ -46,4 +46,12 @@ class AppNavigationActions(private val navController: NavHostController) {
             restoreState = true
         }
     }
+
+    fun navigateToLogin() {
+        navController.navigate(LOGIN_SCREEN) {
+            popUpTo(0)
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
 }

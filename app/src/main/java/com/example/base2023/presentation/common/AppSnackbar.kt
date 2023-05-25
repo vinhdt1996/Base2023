@@ -1,9 +1,7 @@
 package com.example.base2023.presentation.common
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -21,7 +19,7 @@ import com.example.base2023.ui.theme.CustomTheme
 import com.example.base2023.vo.ToastData
 
 @Composable
-fun BoxScope.ToastView(toastData: ToastData?) {
+fun AppSnackbar(toastData: ToastData?) {
     Card(
         shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(
@@ -30,9 +28,6 @@ fun BoxScope.ToastView(toastData: ToastData?) {
         colors = CardDefaults.cardColors(
             containerColor = CustomTheme.colors.toastBackGround
         ),
-        modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .offset(y = (-100).dp),
         border = BorderStroke(1.dp, BorderToast),
     ) {
 //        AnimatedVisibility(

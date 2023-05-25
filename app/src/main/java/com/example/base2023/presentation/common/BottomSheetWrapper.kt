@@ -1,4 +1,4 @@
-package com.example.base2023.util
+package com.example.base2023.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,10 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.example.base2023.util.clickableNoEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBottomSheet(
+fun BottomSheetWrapper(
     scaffoldState: BottomSheetScaffoldState,
     onDismissRequest: () -> Unit,
     sheetContent: @Composable () -> Unit,
