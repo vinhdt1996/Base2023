@@ -1,5 +1,6 @@
 package com.example.base2023.base
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job
@@ -34,6 +35,7 @@ abstract class BaseViewModel<ScreenState> : ViewModel() {
     }
 
     protected open fun parseErrorCallApi(e: Throwable) {
+        Log.d("vinnne", e.toString())
 //        when (e) {
 //            is NetworkErrorException -> {
 //                AppEvent.hideLoading()

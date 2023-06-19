@@ -1,5 +1,6 @@
 package com.example.base2023.presentation.login
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.base2023.presentation.common.CustomAlertDialog
@@ -17,12 +19,13 @@ import com.example.base2023.presentation.common.CustomOutlinedTextField
 import com.example.base2023.presentation.common.PrimaryButton
 import com.example.base2023.presentation.common.VerticalSpacer
 import com.example.base2023.util.LoginTopAppBar
+import com.example.base2023.util.saveRingtones
 import com.example.base2023.vo.DialogData
 
 
 @Composable
 fun LoginScreen(
-    onLoginSuccess: () -> Unit, viewModel: LoginViewModel
+    onLoginSuccess: () -> Unit, viewModel: LoginViewModel, context: Context = LocalContext.current
 ) {
     Scaffold(topBar = { LoginTopAppBar() }) { padding ->
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -44,6 +47,7 @@ fun LoginScreen(
             viewModel.uiEvent.collect() { event ->
                 when (event) {
                     is LoginUiEvent.LoginSuccess -> onLoginSuccess()
+                    is LoginUiEvent.Downloaded -> context.saveRingtones(event.stream)
                 }
             }
         }
@@ -55,6 +59,7 @@ private fun LoginContent(
     email: String,
     password: String,
     onEvent: (LoginEvent) -> Unit,
+    context: Context = LocalContext.current,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -77,5 +82,12 @@ private fun LoginContent(
         )
         VerticalSpacer(height = 16f)
         PrimaryButton(label = "Login", onClick = { onEvent.invoke(LoginEvent.Login) })
+        PrimaryButton(label = "Download", onClick = {
+            onEvent.invoke(LoginEvent.Download)
+
+//            val myDirectory = File(
+//                Environment.getExternalStorageDirectory(),"MyPublicFolder")
+//            myDirectory.mkdir()
+        })
     }
 }

@@ -1,33 +1,32 @@
-//package com.example.base2023.base
-//
-//import com.example.base2023.base.BaseResponse
-//import com.example.base2023.base.NetworkErrorException
-//import com.example.base2023.base.NetworkResult
-//
-//open class BaseRemoteDataSource(private val uniInternalApi: UniInternalApi) {
-//
-//    protected suspend fun <T : Any> callApi(call: suspend () -> Response<T>): NetworkResult<T> {
+package com.example.base2023.base
+
+import com.example.base2023.data.network.api.ApiService
+import retrofit2.Response
+
+open class BaseRemoteDataSource(private val api: ApiService) {
+
+    protected suspend fun <T : Any> callApi(call: suspend () -> Response<T>): NetworkResult<T> {
 //        if (!AppUtils.isInternetAvailable()) {
 //            return NetworkResult.Error(NetworkErrorException(null, "No internet connection!"))
 //        }
-//        val response: Response<T>
-//        try {
-//            response = call.invoke()
-//        } catch (t: Throwable) {
-//            return NetworkResult.Error(NetworkErrorException(null, t.message))
-//        }
-//
-//        if (response.isSuccessful) {
-//            return if (response.body() == null) {
-//                NetworkResult.Error(
-//                    NetworkErrorException(
-//                        200, "Response without body"
-//                    )
-//                )
-//            } else {
-//                NetworkResult.Success(response.body()!!)
-//            }
-//        } else {
+        val response: Response<T>
+        try {
+            response = call.invoke()
+        } catch (t: Throwable) {
+            return NetworkResult.Error(NetworkErrorException(null, t.message))
+        }
+
+        if (response.isSuccessful) {
+            return if (response.body() == null) {
+                NetworkResult.Error(
+                    NetworkErrorException(
+                        200, "Response without body"
+                    )
+                )
+            } else {
+                NetworkResult.Success(response.body()!!)
+            }
+        } else {
 //            val errorBody = response.errorBody()?.string()
 //            if (errorBody != null) {
 //                val baseResponse = Gson().fromJson(errorBody, BaseResponse::class.java)
@@ -42,15 +41,15 @@
 //                    )
 //                }
 //            } else {
-//                return NetworkResult.Error(
-//                    NetworkErrorException(
-//                        response.code(), response.message()
-//                    )
-//                )
-//            }
-//        }
-//    }
-//
+            return NetworkResult.Error(
+                NetworkErrorException(
+                    response.code(), response.message()
+                )
+            )
+        }
+    }
+}
+
 //    private suspend fun <T : Any> callApiRefreshToken(originCall: suspend () -> Response<T>): NetworkResult<T> {
 //        if (!AppUtils.isInternetAvailable()) {
 //            return NetworkResult.Error(
