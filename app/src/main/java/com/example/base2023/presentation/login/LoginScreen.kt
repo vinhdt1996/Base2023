@@ -186,12 +186,14 @@ private fun LoginContent(
         })
     }
     LaunchedEffect(key1 = Unit) {
-        val docsFolder = File(
+        val folder = File(
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES)
-                .toString() + ""
+                .toString() + "/ringtonedownload"
         )
-        if (docsFolder.exists()) {
-            val list = docsFolder.listFiles()
+        Log.d("vinnne", "folder path: ${folder.absolutePath}")
+
+        if (folder.exists()) {
+            val list = folder.listFiles()
             Log.d("vinnne", "size ${list?.size}")
             firstFile = list?.firstOrNull()
             Log.d("vinnne", "firstFile ${firstFile?.absolutePath}")
